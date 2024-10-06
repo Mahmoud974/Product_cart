@@ -36,13 +36,16 @@ export default function Page() {
       )
     );
   };
+  const handleQuantityChange = (item: Dessert, newQuantity: number) => {
+    updateQuantity(item, newQuantity);
+  };
 
   return (
     <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
       <div className="mx-4">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold my-7">Desserts</h1>
-          <DialogAlert />
+          <DialogAlert itemCount={tab.length} />
         </div>
         <ul className="grid lg:grid-cols-3 grid-cols-1 gap-3">
           {dessert?.map((item: Dessert, index: number) => {
@@ -66,8 +69,8 @@ export default function Page() {
                       {cartItem ? (
                         <CounterQuantity
                           quantityUser={cartItem.quantity}
-                          updateQuantity={(newQuantity: number) =>
-                            updateQuantity(item, newQuantity)
+                          onQuantityChange={(newQuantity) =>
+                            handleQuantityChange(item, newQuantity)
                           }
                         />
                       ) : (

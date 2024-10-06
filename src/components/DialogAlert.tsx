@@ -9,14 +9,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { MenuIcon } from "lucide-react";
+import { ShoppingBasket } from "lucide-react";
 import React from "react";
 
-export default function DialogAlert() {
+type DialogAlertProps = {
+  itemCount: number;
+};
+
+export default function DialogAlert({ itemCount }: DialogAlertProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <MenuIcon className="lg:hidden flex" />
+      <AlertDialogTrigger className="relative">
+        <ShoppingBasket className="lg:hidden flex" />
+        {itemCount > 0 && (
+          <span className=" lg:hidden flex absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+            {itemCount}
+          </span>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

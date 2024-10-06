@@ -1,16 +1,25 @@
 import { CirclePlus, CircleMinus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Props = {
   quantityUser: number;
+  onQuantityChange: (quantity: number) => void; // Fonction de rappel pour notifier le parent
 };
-const CounterQuantity = ({ quantityUser = 12 }: Props) => {
+
+const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
   const customButton: string =
     "text-2xl bg-gray-200 text-gray-400 font-bold w-12 h-12 flex items-center justify-center";
   const [quantity, setQuantity] = useState<number>(quantityUser);
 
+  // Effectuer l'appel de la fonction de rappel lorsque la quantité change
+  useEffect(() => {
+    onQuantityChange(quantity);
+  }, [quantity, onQuantityChange]);
+
   const addQuantity = (): void => {
-    setQuantity(quantity + 1);
+    if (quantity < 5) {
+      setQuantity(quantity + 1);
+    }
   };
 
   const lessQuantity = (): void => {
