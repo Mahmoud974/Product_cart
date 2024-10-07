@@ -1,3 +1,4 @@
+"use client";
 import { CirclePlus, CircleMinus } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -11,11 +12,9 @@ const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
     "text-2xl bg-gray-200 text-gray-400 font-bold w-12 h-12 flex items-center justify-center";
   const [quantity, setQuantity] = useState<number>(quantityUser);
 
-  // Effectuer l'appel de la fonction de rappel lorsque la quantité change
   useEffect(() => {
     onQuantityChange(quantity);
-  }, [quantity, onQuantityChange]);
-
+  }, [quantity]);
   const addQuantity = (): void => {
     if (quantity < 5) {
       setQuantity(quantity + 1);
@@ -30,23 +29,23 @@ const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
 
   return (
     <div className="flex gap-3 items-center">
-      <button
+      <p
         className={customButton}
         onClick={lessQuantity}
         data-testid="decrease-button"
       >
         <CircleMinus />
-      </button>
+      </p>
       <p className="bg-gray-200 text-md w-12 h-12 text-2xl mx-2 text-center flex items-center justify-center text-blue-800 font-bold">
         {quantity}
       </p>
-      <button
+      <p
         className={customButton}
         onClick={addQuantity}
         data-testid="increase-button"
       >
         <CirclePlus />
-      </button>
+      </p>
     </div>
   );
 };

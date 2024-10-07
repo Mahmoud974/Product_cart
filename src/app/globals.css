@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 body {
-background-color:#fdffe7;
+background-color:#fefff3;
 }
 
 @layer utilities {
   .text-balance {
-    text-wrap: #fff2d1;
+    text-wrap: #fff6e0;
   }
 }
 

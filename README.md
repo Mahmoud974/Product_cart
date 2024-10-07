@@ -39,4 +39,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 <!-- docker build -t dessert .  -->
 <!-- docker images -->
 <!-- docker run -p 3000:3000 dessert -->
-<!-- docker ps  -->
+<!-- docker ps  --> afficher les container actif
+<!-- docker run -p 3000:3000 -v $(pwd):/app -v /app/node_modules dessert
+ -->
