@@ -12,8 +12,9 @@ import Basket from "@/components/Basket";
 export default function Page() {
   const [tab, setTab] = useState<{ item: Dessert; quantity: number }[]>([]);
   const { data: dessert } = useTemplate();
+  const [activeButton, setActiveButton] = useState<number | null>(null); // 1. État pour le bouton actif
 
-  const handleAddToCart = (item: Dessert) => {
+  const handleAddToCart = (item: Dessert, index: number) => {
     const existingItem = tab.find((entry) => entry.item.name === item.name);
     if (existingItem) {
       setTab(
@@ -26,6 +27,7 @@ export default function Page() {
     } else {
       setTab((prevTab) => [...prevTab, { item, quantity: 1 }]);
     }
+    setActiveButton(index); // 2. Définit le bouton actif lorsque cliqué
   };
 
   const updateQuantity = (item: Dessert, quantity: number) => {
@@ -35,6 +37,7 @@ export default function Page() {
       )
     );
   };
+
   const handleQuantityChange = useCallback(
     (item: Dessert, newQuantity: number) => {
       updateQuantity(item, newQuantity);
@@ -66,10 +69,12 @@ export default function Page() {
                     priority
                   />
                   <Button
-                    onClick={() => handleAddToCart(item)}
+                    onClick={() => handleAddToCart(item, index)} // Passe l'index du bouton
                     className={`${
-                      cartItem ? "bg-red-500" : ""
-                    }cursor-pointer bg-white hover:bg-red-600 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border border-red-300 flex items-center justify-center mt-[-1rem]`}
+                      activeButton === index
+                        ? "bg-red-500 text-white"
+                        : "bg-white"
+                    } cursor-pointer hover:bg-red-600 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border border-red-300 flex items-center justify-center mt-[-1rem]`}
                   >
                     <div className="w-full flex justify-center items-center ">
                       {cartItem ? (
@@ -88,7 +93,7 @@ export default function Page() {
                     </div>
                   </Button>
                 </div>
-                <div className="flex flex-col items-start text-left mt-2  lg:px-0">
+                <div className="flex flex-col items-start text-left mt-2 lg:px-0">
                   <small>{item.category}</small>
                   <p className="font-bold">{item.name}</p>
                   <p className="text-orange-600">€{item.price.toFixed(2)}</p>
