@@ -6,7 +6,7 @@ import { ShoppingCart } from "lucide-react";
 import { useTemplate } from "./hooks/useTemplate";
 import { Dessert } from "./api/db/data";
 import DialogAlert from "@/components/DialogAlert";
-import CounterQuantity from "@/modules/Quantity";
+import CounterQuantity from "@/components/Quantity";
 import Basket from "@/components/Basket";
 
 export default function Page() {
@@ -60,7 +60,7 @@ export default function Page() {
                 <div className={`flex flex-col items-center `}>
                   <Image
                     className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl ${
-                      cartItem ? "outline outline-2 outline-red-500" : ""
+                      cartItem ? "outline outline-5 outline-orange-700" : ""
                     }`}
                     src={item.image.desktop}
                     alt={item.name}
@@ -70,11 +70,11 @@ export default function Page() {
                   />
                   <Button
                     onClick={() => handleAddToCart(item, index)} // Passe l'index du bouton
-                    className={`${
+                    className={`border-none cursor-pointer hover:bg-orange-800 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border  flex items-center justify-center mt-[-1rem]  ${
                       activeButton === index
-                        ? "bg-red-500 text-white"
+                        ? "bg-orange-700 text-white"
                         : "bg-white"
-                    } cursor-pointer hover:bg-red-600 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border border-red-300 flex items-center justify-center mt-[-1rem]`}
+                    } `}
                   >
                     <div className="w-full flex justify-center items-center ">
                       {cartItem ? (
@@ -86,7 +86,9 @@ export default function Page() {
                         />
                       ) : (
                         <div className="flex items-center hover:text-white">
-                          <ShoppingCart className="text-red-400 " />
+                          <ShoppingCart
+                            className={cartItem ? "text-white" : "text-red-600"}
+                          />
                           <p className="ml-2">Add to Cart</p>
                         </div>
                       )}

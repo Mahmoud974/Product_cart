@@ -4,12 +4,10 @@ import { useState, useEffect } from "react";
 
 type Props = {
   quantityUser: number;
-  onQuantityChange: (quantity: number) => void; // Fonction de rappel pour notifier le parent
+  onQuantityChange: (quantity: number) => void;
 };
 
 const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
-  const customButton: string =
-    "text-2xl bg-gray-200 text-gray-400 font-bold w-12 h-12 flex items-center justify-center";
   const [quantity, setQuantity] = useState<number>(quantityUser);
 
   useEffect(() => {
@@ -28,22 +26,12 @@ const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
   };
 
   return (
-    <div className="flex gap-3 items-center">
-      <p
-        className={customButton}
-        onClick={lessQuantity}
-        data-testid="decrease-button"
-      >
+    <div className="flex gap-6 items-center">
+      <p onClick={lessQuantity} data-testid="decrease-button">
         <CircleMinus />
       </p>
-      <p className="bg-gray-200 text-md w-12 h-12 text-2xl mx-2 text-center flex items-center justify-center text-blue-800 font-bold">
-        {quantity}
-      </p>
-      <p
-        className={customButton}
-        onClick={addQuantity}
-        data-testid="increase-button"
-      >
+      <p>{quantity}</p>
+      <p onClick={addQuantity} data-testid="increase-button">
         <CirclePlus />
       </p>
     </div>
