@@ -9,8 +9,7 @@ import { Dessert } from "@/app/api/db/data";
 
 type Props = {
   tab: { item: Dessert; quantity: number }[];
-  bgItemArticle: string;
-  noOrder: boolean;
+
   onRemoveItem: (item: Dessert) => void; // Type correct pour la fonction
 };
 
