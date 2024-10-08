@@ -10,9 +10,8 @@ import {
 import { CircleCheck } from "lucide-react";
 import React from "react";
 import ItemBasket from "./ItemBasket";
-import TotalItem from "./TotalItem";
 
-export default function CheckBasket({ tab, noOrder }: any) {
+export default function CheckBasket({ tab }: any) {
   console.log(tab);
 
   return (

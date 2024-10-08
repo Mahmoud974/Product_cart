@@ -12,9 +12,8 @@ import Basket from "@/components/Basket";
 export default function Page() {
   const [tab, setTab] = useState<{ item: Dessert; quantity: number }[]>([]);
   const { data: dessert } = useTemplate();
-  const [activeButton, setActiveButton] = useState<number | null>(null); // 1. État pour le bouton actif
 
-  const handleAddToCart = (item: Dessert, index: number) => {
+  const handleAddToCart = (item: Dessert) => {
     const existingItem = tab.find((entry) => entry.item.name === item.name);
     if (existingItem) {
       setTab(
@@ -27,7 +26,6 @@ export default function Page() {
     } else {
       setTab((prevTab) => [...prevTab, { item, quantity: 1 }]);
     }
-    setActiveButton(index); // 2. Définit le bouton actif lorsque cliqué
   };
 
   const updateQuantity = (item: Dessert, quantity: number) => {
@@ -38,11 +36,21 @@ export default function Page() {
     );
   };
 
+  const handleRemoveItem = (itemToRemove: Dessert) => {
+    setTab((prevTab) =>
+      prevTab.filter((entry) => entry.item.name !== itemToRemove.name)
+    );
+  };
+
   const handleQuantityChange = useCallback(
     (item: Dessert, newQuantity: number) => {
-      updateQuantity(item, newQuantity);
+      if (newQuantity === 0) {
+        handleRemoveItem(item); // Retire l'item du panier si la quantité est 0
+      } else {
+        updateQuantity(item, newQuantity);
+      }
     },
-    [updateQuantity]
+    [updateQuantity, handleRemoveItem]
   );
 
   return (
@@ -55,12 +63,15 @@ export default function Page() {
         <ul className="grid lg:grid-cols-3 grid-cols-1 gap-3">
           {dessert?.map((item: Dessert, index: number) => {
             const cartItem = tab.find((entry) => entry.item.name === item.name);
+
             return (
-              <li key={index} className="">
-                <div className={`flex flex-col items-center `}>
+              <li key={index}>
+                <div className="flex flex-col items-center">
                   <Image
                     className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl ${
-                      cartItem ? "outline outline-5 outline-orange-700" : ""
+                      cartItem && cartItem.quantity > 0
+                        ? "outline outline-5 outline-orange-700"
+                        : ""
                     }`}
                     src={item.image.desktop}
                     alt={item.name}
@@ -69,15 +80,15 @@ export default function Page() {
                     priority
                   />
                   <Button
-                    onClick={() => handleAddToCart(item, index)} // Passe l'index du bouton
-                    className={`border-none cursor-pointer hover:bg-orange-800 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border  flex items-center justify-center mt-[-1rem]  ${
-                      activeButton === index
+                    onClick={() => handleAddToCart(item)}
+                    className={`border-none cursor-pointer hover:bg-orange-800 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border flex items-center justify-center mt-[-1rem] ${
+                      cartItem && cartItem.quantity > 0
                         ? "bg-orange-700 text-white"
                         : "bg-white"
                     } `}
                   >
                     <div className="w-full flex justify-center items-center ">
-                      {cartItem ? (
+                      {cartItem && cartItem.quantity > 0 ? (
                         <CounterQuantity
                           quantityUser={cartItem.quantity}
                           onQuantityChange={(newQuantity) =>
@@ -86,9 +97,7 @@ export default function Page() {
                         />
                       ) : (
                         <div className="flex items-center hover:text-white">
-                          <ShoppingCart
-                            className={cartItem ? "text-white" : "text-red-600"}
-                          />
+                          <ShoppingCart className="text-red-600" />
                           <p className="ml-2">Add to Cart</p>
                         </div>
                       )}
@@ -106,8 +115,8 @@ export default function Page() {
         </ul>
       </div>
 
-      {/* Basket the article */}
-      <Basket tab={tab} />
+      {/* Affichage du panier */}
+      <Basket tab={tab} onRemoveItem={handleRemoveItem} />
     </main>
   );
 }
