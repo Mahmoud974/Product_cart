@@ -13,7 +13,9 @@ import ItemBasket from "./ItemBasket";
 
 export default function CheckBasket({ tab }: any) {
   console.log(tab);
-
+  const handleRemoveItem = () => {
+    return "ok";
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger className="text-white py-3 bg-orange-700 w-full mx-auto rounded-full">

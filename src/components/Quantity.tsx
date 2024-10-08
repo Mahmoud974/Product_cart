@@ -10,9 +10,13 @@ type Props = {
 const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
   const [quantity, setQuantity] = useState<number>(quantityUser);
 
+  // Mettre à jour seulement si la quantité a changé
   useEffect(() => {
-    onQuantityChange(quantity);
-  }, [quantity]);
+    if (quantity !== quantityUser) {
+      onQuantityChange(quantity);
+    }
+  }, [quantity, quantityUser, onQuantityChange]);
+
   const addQuantity = (): void => {
     if (quantity < 5) {
       setQuantity(quantity + 1);
