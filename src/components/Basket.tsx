@@ -10,7 +10,7 @@ import { Dessert } from "@/app/api/db/data";
 type Props = {
   tab: { item: Dessert; quantity: number }[];
 
-  onRemoveItem: (item: Dessert) => void; // Type correct pour la fonction
+  onRemoveItem: (item: Dessert) => void;
 };
 
 export default function Basket({ tab, onRemoveItem }: Props) {

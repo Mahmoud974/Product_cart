@@ -30,6 +30,7 @@ export default function CheckBasket({ tab }: any) {
           <AlertDialogDescription>{tab.category}</AlertDialogDescription>
         </AlertDialogHeader>
         <ItemBasket
+          onRemoveItem={handleRemoveItem}
           tab={tab}
           bgItemArticle="bg-orange-50 px-8 rounded-xl pb-3 space-y-7"
           noOrder={true}

@@ -16,6 +16,7 @@ const CounterQuantity = ({ quantityUser = 0, onQuantityChange }: Props) => {
   const addQuantity = (): void => {
     if (quantity < 5) {
       setQuantity(quantity + 1);
+      return;
     }
   };
 

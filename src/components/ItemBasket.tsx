@@ -59,7 +59,7 @@ export default function ItemBasket({
                   className="text-orange-900 cursor-pointer"
                   onClick={() => {
                     console.log("Item removed: ", entry.item.name);
-                    onRemoveItem(entry.item); // Appel de la fonction de suppression
+                    onRemoveItem(entry.item);
                   }}
                 />
               )}

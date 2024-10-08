@@ -1,3 +1,4 @@
+import { Dessert } from "@/app/api/db/data";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,9 +15,12 @@ import React from "react";
 
 type DialogAlertProps = {
   itemCount: number;
+  tab: any;
 };
 
-export default function DialogAlert({ itemCount }: DialogAlertProps) {
+export default function DialogAlert({ tab, itemCount }: DialogAlertProps) {
+  console.log(tab);
+
   return (
     <AlertDialog>
       <AlertDialogTrigger className="relative">

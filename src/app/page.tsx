@@ -13,6 +13,7 @@ export default function Page() {
   const [tab, setTab] = useState<{ item: Dessert; quantity: number }[]>([]);
   const { data: dessert } = useTemplate();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [warning, setWarning] = useState("");
 
   const handleAddToCart = (item: Dessert) => {
     const existingItem = tab.find((entry) => entry.item.name === item.name);
@@ -37,27 +38,18 @@ export default function Page() {
     );
   }, []);
 
-  const handleRemoveItem = (itemToRemove: Dessert) => {
-    setTab((prevTab) =>
-      prevTab.filter((entry) => entry.item.name !== itemToRemove.name)
-    );
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+  // Wrap handleRemoveItem in useCallback
+  const handleRemoveItem = useCallback((itemToRemove: Dessert) => {
+    setTab((prevTab) => {
+      const newTab = prevTab.filter(
+        (entry) => entry.item.name !== itemToRemove.name
+      );
+      if (newTab.length < prevTab.length) {
+        setWarning(`${itemToRemove.name} a été retiré du panier.`);
+        setTimeout(() => setWarning(""), 3000); // Réinitialise l'avertissement après 3 secondes
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Nettoyage de l'écouteur
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+      return newTab;
+    });
   }, []);
 
   const handleQuantityChange = useCallback(
@@ -71,8 +63,26 @@ export default function Page() {
     [updateQuantity, handleRemoveItem]
   );
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
+      {warning && <div className="alert">{warning}</div>}{" "}
+      {/* Affichage de l'avertissement */}
       <div
         className={`flex md:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 ${
           isScrolled ? "backdrop-blur-md" : ""
@@ -81,7 +91,6 @@ export default function Page() {
         <h1 className="text-xl font-bold my-7">Desserts</h1>
         <DialogAlert tab={tab} itemCount={tab.length} />
       </div>
-
       <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
         <div className="mx-4">
           <div className="md:flex hidden items-center justify-between w-full lg:relative sticky top-0 md:bg-none bg-[#fefff3] my-2 ">
@@ -96,8 +105,6 @@ export default function Page() {
 
               return (
                 <li key={item.id}>
-                  {" "}
-                  {/* Utilise un ID unique si possible */}
                   <div className="flex flex-col items-center">
                     <Image
                       className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl ${
