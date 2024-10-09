@@ -10,11 +10,14 @@ import {
 import { CircleCheck } from "lucide-react";
 import React from "react";
 import ItemBasket from "./ItemBasket";
+import { useCounter } from "@/app/provider/queryApiDessert";
 
 export default function CheckBasket({ tab }: any) {
+  const { setTab } = useCounter();
+
   console.log(tab);
   const handleRemoveItem = () => {
-    return "ok";
+    setTab([]);
   };
   return (
     <AlertDialog>
@@ -39,7 +42,10 @@ export default function CheckBasket({ tab }: any) {
         />
 
         <AlertDialogFooter>
-          <AlertDialogTrigger className="text-white py-3 bg-orange-700 w-full mx-auto rounded-full">
+          <AlertDialogTrigger
+            className="text-white py-3 bg-orange-700 w-full mx-auto rounded-full"
+            onClick={handleRemoveItem}
+          >
             Start New Order
           </AlertDialogTrigger>
         </AlertDialogFooter>

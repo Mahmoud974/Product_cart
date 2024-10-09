@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
-
 import { Dessert } from "./api/db/data";
 import DialogAlert from "@/components/DialogAlert";
 import CounterQuantity from "@/components/Quantity";
@@ -11,7 +10,8 @@ import Basket from "@/components/Basket";
 import { useCounter } from "./provider/queryApiDessert";
 
 export default function Page() {
-  const { dessert, tab, modifyCartItem, isScrolled, warning } = useCounter();
+  const { dessert, tab, modifyCartItem, isScrolled, warning, isOpen } =
+    useCounter();
 
   return (
     <>
@@ -21,16 +21,16 @@ export default function Page() {
         </div>
       )}{" "}
       <header
-        className={`flex md:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 ${
+        className={`flex lg:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 my-3 ${
           isScrolled ? "backdrop-blur-md" : ""
         }`}
       >
-        <h1 className="text-xl font-bold my-7">Desserts</h1>
+        <h1 className="text-xl font-bold md:ml-7 my-7">Desserts</h1>
         <DialogAlert tab={tab} itemCount={tab.length} />
       </header>
       <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
         <div className="mx-4">
-          <div className="md:flex hidden items-center justify-between w-full lg:relative sticky top-0 md:bg-none bg-[#fefff3] my-2 ">
+          <div className="lg:flex hidden items-center justify-between w-full lg:relative sticky top-0 md:bg-none bg-[#fefff3] my-2 ">
             <h1 className="text-3xl font-bold my-7">Desserts</h1>
           </div>
 
@@ -44,6 +44,7 @@ export default function Page() {
                 <li key={item.id} role="listitem">
                   <div className="flex flex-col items-center">
                     <Image
+                      loading="lazy"
                       className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl cursor-pointer ${
                         cartItem && cartItem.quantity > 0
                           ? "outline outline-5 outline-orange-700"
@@ -53,13 +54,12 @@ export default function Page() {
                       alt={item.name}
                       width={1000}
                       height={1000}
-                      priority
                       onClick={() => modifyCartItem(item, 1)}
                       role="button"
-                      tabIndex={0} // Permet l'interaction au clavier
-                      onKeyPress={(e) => {
+                      tabIndex={0}
+                      onKeyUp={(e) => {
                         if (e.key === "Enter") {
-                          modifyCartItem(item, 1); // Incrémente la quantité avec la touche Entrée
+                          modifyCartItem(item, 1);
                         }
                       }}
                     />
@@ -104,7 +104,13 @@ export default function Page() {
         </div>
 
         {/* Affichage du panier */}
-        <Basket tab={tab} onRemoveItem={(item) => modifyCartItem(item, -100)} />
+        {isOpen && (
+          <Basket
+            tab={tab}
+            onRemoveItem={(item) => modifyCartItem(item, -100)}
+            isOpen={false}
+          />
+        )}
       </main>
     </>
   );

@@ -20,6 +20,7 @@ interface CounterContextType {
   modifyCartItem: (item: Dessert, quantityChange: number) => void;
   isScrolled: boolean;
   warning: string;
+  isOpen: boolean;
 }
 
 const CounterContext = createContext<CounterContextType | undefined>(undefined);
@@ -29,6 +30,7 @@ export const CounterProvider = ({ children }: { children: ReactNode }) => {
   const [warning, setWarning] = useState("");
   const { data: dessert } = useTemplate(); // Récupérer les données du hook
   const [tab, setTab] = useState<{ item: Dessert; quantity: number }[]>([]);
+  const isOpen = true;
 
   // Fonction pour modifier le panier
   const modifyCartItem = useCallback(
@@ -80,6 +82,7 @@ export const CounterProvider = ({ children }: { children: ReactNode }) => {
         modifyCartItem,
         isScrolled,
         warning,
+        isOpen,
       }}
     >
       {children}
