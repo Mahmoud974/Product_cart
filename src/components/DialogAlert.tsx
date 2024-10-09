@@ -1,4 +1,4 @@
-import { Dessert } from "@/app/api/db/data";
+import { useCounter } from "@/app/provider/queryApiDessert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ShoppingBasket } from "lucide-react";
 import React from "react";
+import Basket from "./Basket";
 
 type DialogAlertProps = {
   itemCount: number;
@@ -19,7 +20,7 @@ type DialogAlertProps = {
 };
 
 export default function DialogAlert({ tab, itemCount }: DialogAlertProps) {
-  console.log(tab);
+  const { modifyCartItem } = useCounter();
 
   return (
     <AlertDialog>
@@ -35,8 +36,10 @@ export default function DialogAlert({ tab, itemCount }: DialogAlertProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <Basket
+              tab={tab}
+              onRemoveItem={(item) => modifyCartItem(item, -100)}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

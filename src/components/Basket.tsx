@@ -14,9 +14,12 @@ type Props = {
 };
 
 export default function Basket({ tab, onRemoveItem }: Props) {
+  const resetCart = () => {
+    setTab([]);
+  };
   return (
     <div className="mx-4 flex h-full max-w-full">
-      <div className="bg-white flex p-8 flex-col items-start pt-8 max-w-2xl w-full shadow-xl rounded-xl justify-center my-4">
+      <div className="">
         <p className="text-red-600 font-bold text-2xl text-left">
           Your Cart ({tab.length}){" "}
         </p>
@@ -56,7 +59,9 @@ export default function Basket({ tab, onRemoveItem }: Props) {
           </div>
         )}
 
-        {tab.length > 0 && <CheckBasket tab={tab} noButton={true} />}
+        {tab.length > 0 && (
+          <CheckBasket tab={tab} noButton={true} onResetCart={resetCart} />
+        )}
       </div>
     </div>
   );

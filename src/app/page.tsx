@@ -1,137 +1,86 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
-import { useTemplate } from "./hooks/useTemplate";
+
 import { Dessert } from "./api/db/data";
 import DialogAlert from "@/components/DialogAlert";
 import CounterQuantity from "@/components/Quantity";
 import Basket from "@/components/Basket";
+import { useCounter } from "./provider/queryApiDessert";
 
 export default function Page() {
-  const [tab, setTab] = useState<{ item: Dessert; quantity: number }[]>([]);
-  const { data: dessert } = useTemplate();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [warning, setWarning] = useState("");
-
-  const handleAddToCart = (item: Dessert) => {
-    const existingItem = tab.find((entry) => entry.item.name === item.name);
-    if (existingItem) {
-      setTab((prevTab) =>
-        prevTab.map((entry) =>
-          entry.item.name === item.name
-            ? { ...entry, quantity: entry.quantity + 1 }
-            : entry
-        )
-      );
-    } else {
-      setTab((prevTab) => [...prevTab, { item, quantity: 1 }]);
-    }
-  };
-
-  const updateQuantity = useCallback((item: Dessert, quantity: number) => {
-    setTab((prevTab) =>
-      prevTab.map((entry) =>
-        entry.item.name === item.name ? { ...entry, quantity } : entry
-      )
-    );
-  }, []);
-
-  // Wrap handleRemoveItem in useCallback
-  const handleRemoveItem = useCallback((itemToRemove: Dessert) => {
-    setTab((prevTab) => {
-      const newTab = prevTab.filter(
-        (entry) => entry.item.name !== itemToRemove.name
-      );
-      if (newTab.length < prevTab.length) {
-        setWarning(`${itemToRemove.name} a été retiré du panier.`);
-        setTimeout(() => setWarning(""), 3000); // Réinitialise l'avertissement après 3 secondes
-      }
-      return newTab;
-    });
-  }, []);
-
-  const handleQuantityChange = useCallback(
-    (item: Dessert, newQuantity: number) => {
-      if (newQuantity === 0) {
-        handleRemoveItem(item); // Retire l'item du panier si la quantité est 0
-      } else {
-        updateQuantity(item, newQuantity);
-      }
-    },
-    [updateQuantity, handleRemoveItem]
-  );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const { dessert, tab, modifyCartItem, isScrolled, warning } = useCounter();
 
   return (
     <>
-      {warning && <div className="alert">{warning}</div>}{" "}
-      {/* Affichage de l'avertissement */}
-      <div
+      {warning && (
+        <div className="alert" role="alert">
+          {warning}
+        </div>
+      )}{" "}
+      <header
         className={`flex md:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 ${
           isScrolled ? "backdrop-blur-md" : ""
         }`}
       >
         <h1 className="text-xl font-bold my-7">Desserts</h1>
         <DialogAlert tab={tab} itemCount={tab.length} />
-      </div>
+      </header>
       <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
         <div className="mx-4">
           <div className="md:flex hidden items-center justify-between w-full lg:relative sticky top-0 md:bg-none bg-[#fefff3] my-2 ">
             <h1 className="text-3xl font-bold my-7">Desserts</h1>
           </div>
 
-          <ul className="grid lg:grid-cols-3 grid-cols-1 gap-3">
+          <ul className="grid lg:grid-cols-3 grid-cols-1 gap-3" role="list">
             {dessert?.map((item: Dessert) => {
               const cartItem = tab.find(
-                (entry) => entry.item.name === item.name
+                (entry: any) => entry.item.name === item.name
               );
 
               return (
-                <li key={item.id}>
+                <li key={item.id} role="listitem">
                   <div className="flex flex-col items-center">
                     <Image
-                      className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl ${
+                      className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl cursor-pointer ${
                         cartItem && cartItem.quantity > 0
                           ? "outline outline-5 outline-orange-700"
                           : ""
                       }`}
                       src={item.image.desktop}
-                      alt={item.name} // Assure-toi d'utiliser une description d'image appropriée
+                      alt={item.name}
                       width={1000}
                       height={1000}
                       priority
+                      onClick={() => modifyCartItem(item, 1)}
+                      role="button"
+                      tabIndex={0} // Permet l'interaction au clavier
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          modifyCartItem(item, 1); // Incrémente la quantité avec la touche Entrée
+                        }
+                      }}
                     />
                     <Button
-                      onClick={() => handleAddToCart(item)}
+                      onClick={() => modifyCartItem(item, 1)}
                       className={`border-none cursor-pointer hover:bg-orange-800 hover:text-white text-grey-900 max-w-[10rem] w-full h-[3rem] rounded-full border flex items-center justify-center mt-[-1rem] ${
                         cartItem && cartItem.quantity > 0
                           ? "bg-orange-700 text-white"
                           : "bg-white"
-                      } `}
+                      }`}
+                      aria-label={`Ajouter ${item.name} au panier`} // Description pour l'accessibilité
                     >
                       <div className="w-full flex justify-center items-center ">
                         {cartItem && cartItem.quantity > 0 ? (
                           <CounterQuantity
                             quantityUser={cartItem.quantity}
                             onQuantityChange={(newQuantity) =>
-                              handleQuantityChange(item, newQuantity)
+                              modifyCartItem(
+                                item,
+                                newQuantity - cartItem.quantity
+                              )
                             }
                           />
                         ) : (
@@ -155,7 +104,7 @@ export default function Page() {
         </div>
 
         {/* Affichage du panier */}
-        <Basket tab={tab} onRemoveItem={handleRemoveItem} />
+        <Basket tab={tab} onRemoveItem={(item) => modifyCartItem(item, -100)} />
       </main>
     </>
   );
