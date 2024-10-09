@@ -1,5 +1,6 @@
 import {
   AlertDialog,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -7,7 +8,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { CircleCheck } from "lucide-react";
+import { CircleCheck, CircleX } from "lucide-react";
 import React from "react";
 import ItemBasket from "./ItemBasket";
 import { useCounter } from "@/app/provider/queryApiDessert";
@@ -27,10 +28,15 @@ export default function CheckBasket({ tab }: any) {
 
       <AlertDialogContent className="h-autoo">
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            <CircleCheck className="text-green-600 my-3" />
-            <p className="text-3xl font-[800]">Order Confirmed</p>
-            <small className="text-[100]">We hope you enjoy your food!</small>
+          <AlertDialogTitle className="flex justify-between items-center">
+            <div>
+              <CircleCheck className="text-green-600 my-3" />
+              <p className="text-3xl font-[800]">Order Confirmed</p>
+              <small className="text-[100]">We hope you enjoy your food!</small>
+            </div>
+            <AlertDialogCancel className="border-none shadow-none">
+              <CircleX />
+            </AlertDialogCancel>
           </AlertDialogTitle>
           <AlertDialogDescription>{tab.category}</AlertDialogDescription>
         </AlertDialogHeader>

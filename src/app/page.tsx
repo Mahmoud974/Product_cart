@@ -21,12 +21,14 @@ export default function Page() {
         </div>
       )}{" "}
       <header
-        className={`flex container  mx-auto lg:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 my-3 ${
+        className={`flex  mx-auto lg:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 my-3 ${
           isScrolled ? "backdrop-blur-md" : ""
         }`}
       >
-        <h1 className="text-xl font-bold   my-7">Desserts</h1>
-        <DialogAlert tab={tab} itemCount={tab.length} />
+        <div className="mx-auto flex container justify-between">
+          <h1 className="text-xl font-bold   my-7">Desserts</h1>
+          <DialogAlert tab={tab} itemCount={tab.length} />
+        </div>
       </header>
       <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
         <div className="mx-4">
@@ -47,7 +49,7 @@ export default function Page() {
                       loading="lazy"
                       className={`object-cover lg:w-60 shadow-md h-60 rounded-2xl cursor-pointer ${
                         cartItem && cartItem.quantity > 0
-                          ? "outline outline-5 outline-orange-700"
+                          ? "outline outline-4 outline-orange-700"
                           : ""
                       }`}
                       src={item.image.desktop}

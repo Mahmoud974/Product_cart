@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { TreeDeciduous } from "lucide-react";
+import { CircleX, TreeDeciduous } from "lucide-react";
 import CheckBasket from "./CheckBasket";
 import ItemBasket from "./ItemBasket";
 import TotalItem from "./TotalItem";
@@ -21,9 +21,12 @@ export default function Basket({ tab, onRemoveItem, isOpen }: Props) {
           isOpen ? "" : "bg-white p-8 shadow-xl pt-8 my-4 "
         } flex  flex-col items-start  max-w-2xl w-full  rounded-xl justify-center `}
       >
-        <p className="text-red-600 font-bold text-2xl text-left">
-          Your Cart ({tab.length}){" "}
-        </p>
+        <div className="flex justify-between items-center w-full">
+          <p className="text-red-600 font-bold text-2xl text-left">
+            Your Cart ({tab.length}){" "}
+          </p>
+          <CircleX className="cursor-pointer text-red-600 lg:hidden" />
+        </div>
 
         {tab.length === 0 ? (
           <div className="mx-auto">
