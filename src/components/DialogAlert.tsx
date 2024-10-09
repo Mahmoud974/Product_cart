@@ -22,14 +22,18 @@ export default function DialogAlert({ tab, itemCount }: DialogAlertProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger className="relative">
-        <ShoppingBasket className="lg:hidden flex md:mr-7" />
+        <ShoppingBasket className="lg:hidden flex  " />
         {itemCount > 0 && (
-          <span className=" lg:hidden flex absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full  md:mr-7">
+          <span className="lg:hidden flex absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full  ">
             {itemCount}
           </span>
         )}
       </AlertDialogTrigger>
-      <AlertDialogContent>
+
+      {/* Vérifie si on est en format mobile */}
+      <AlertDialogContent
+        className={` ${isOpen ? "block" : "hidden"} lg:hidden`}
+      >
         <AlertDialogHeader>
           <AlertDialogDescription>
             <Basket

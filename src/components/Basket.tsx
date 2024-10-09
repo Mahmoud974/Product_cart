@@ -26,9 +26,9 @@ export default function Basket({ tab, onRemoveItem, isOpen }: Props) {
         </p>
 
         {tab.length === 0 ? (
-          <div>
+          <div className="mx-auto">
             <Image
-              className="object-cover w-44 py-8 mx-12 rounded-2xl "
+              className="object-cover lg:w-44 w-60  py-8 lg:mx-12 mx-0 rounded-2xl flex items-center justify-center"
               src="/assets/images/cake.png"
               alt="basket empty"
               width={1000}

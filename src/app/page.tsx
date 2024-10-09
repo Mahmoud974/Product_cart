@@ -21,11 +21,11 @@ export default function Page() {
         </div>
       )}{" "}
       <header
-        className={`flex lg:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 my-3 ${
+        className={`flex container  mx-auto lg:hidden items-center justify-between w-full sticky top-0 bg-gradient-to-r from-[#feffee]/40 to-[#ffffff]/80 backdrop-blur-md z-10 px-4 my-3 ${
           isScrolled ? "backdrop-blur-md" : ""
         }`}
       >
-        <h1 className="text-xl font-bold md:ml-7 my-7">Desserts</h1>
+        <h1 className="text-xl font-bold   my-7">Desserts</h1>
         <DialogAlert tab={tab} itemCount={tab.length} />
       </header>
       <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
