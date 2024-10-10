@@ -8,7 +8,7 @@ import { Dessert } from "@/app/api/db/data";
 import { AlertDialog } from "@radix-ui/react-alert-dialog";
 
 type Props = {
-  tab: { item: Dessert; quantity: number; category: string }[];
+  tab: any;
   isOpen: boolean;
   displayElement: string;
 
