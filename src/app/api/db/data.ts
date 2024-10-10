@@ -11,6 +11,7 @@ export interface Dessert {
   category: string;
   price: number;
   id: number;
+  quantity?: number;
 }
 
 export const desserts: Dessert[] = [

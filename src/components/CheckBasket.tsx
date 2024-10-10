@@ -13,10 +13,13 @@ import React from "react";
 import ItemBasket from "./ItemBasket";
 import { useCounter } from "@/app/provider/queryApiDessert";
 
-export default function CheckBasket({ tab }: any) {
+type Props = {
+  tab: any;
+};
+
+export default function CheckBasket({ tab }: Props) {
   const { setTab } = useCounter();
 
-  console.log(tab);
   const handleRemoveItem = () => {
     setTab([]);
   };

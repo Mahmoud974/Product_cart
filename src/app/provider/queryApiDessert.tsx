@@ -12,7 +12,7 @@ import { Dessert } from "../api/db/data";
 
 interface CounterContextType {
   dessert: Dessert[] | undefined;
-  tab: { item: Dessert; quantity: number }[];
+  tab: any;
   setTab: React.Dispatch<
     React.SetStateAction<{ item: Dessert; quantity: number }[]>
   >;

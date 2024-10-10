@@ -1,6 +1,10 @@
+import { Dessert } from "@/app/api/db/data";
 import React from "react";
 
-export default function TotalItem({ tab }: any) {
+type Props = {
+  tab: { item: Dessert; quantity: number; category: string }[];
+};
+export default function TotalItem({ tab }: Props) {
   return (
     <div className="flex w-full justify-between items-center">
       <p>Order Total</p>
@@ -8,8 +12,8 @@ export default function TotalItem({ tab }: any) {
         $
         {tab &&
           tab
-            .map((entry: any) => entry.item.price * entry.quantity)
-            .reduce((acc: any, price: any) => acc + price, 0)
+            .map((entry) => entry.item.price * entry.quantity)
+            .reduce((acc: number, price: number) => acc + price, 0)
             .toFixed(2)}
       </p>
     </div>

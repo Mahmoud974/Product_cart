@@ -8,8 +8,8 @@ import { Dessert } from "@/app/api/db/data";
 import { AlertDialog } from "@radix-ui/react-alert-dialog";
 
 type Props = {
-  tab: { item: Dessert; quantity: number }[];
-  isOpen: any;
+  tab: { item: Dessert; quantity: number; category: string }[];
+  isOpen: boolean;
   displayElement: string;
 
   onRemoveItem: (item: Dessert) => void;
@@ -77,7 +77,7 @@ export default function Basket({
             </div>
           )}
 
-          {tab.length > 0 && <CheckBasket tab={tab} noButton={true} />}
+          {tab.length > 0 && <CheckBasket tab={tab} />}
         </div>
       </div>
     </AlertDialog>
