@@ -5,7 +5,7 @@ import { Dessert } from "@/app/api/db/data";
 import Image from "next/image";
 
 type Props = {
-  tab: { item: Dessert; quantity: number }[];
+  tab: { item: Dessert; quantity: number; category: string }[];
   bgItemArticle: string;
   noOrder: boolean;
   onRemoveItem: (item: Dessert) => void;
