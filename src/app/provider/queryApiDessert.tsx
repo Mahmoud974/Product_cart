@@ -1,5 +1,4 @@
 "use client";
-
 import {
   createContext,
   useContext,
@@ -28,11 +27,10 @@ const CounterContext = createContext<CounterContextType | undefined>(undefined);
 export const CounterProvider = ({ children }: { children: ReactNode }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [warning, setWarning] = useState("");
-  const { data: dessert } = useTemplate(); // Récupérer les données du hook
+  const { data: dessert } = useTemplate();
   const [tab, setTab] = useState<{ item: Dessert; quantity: number }[]>([]);
   const isOpen = true;
 
-  // Fonction pour modifier le panier
   const modifyCartItem = useCallback(
     (item: Dessert, quantityChange: number) => {
       setTab((prevTab) => {

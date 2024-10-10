@@ -8,7 +8,7 @@ type Props = {
   tab: { item: Dessert; quantity: number }[];
   bgItemArticle: string;
   noOrder: boolean;
-  onRemoveItem: (item: Dessert) => void; // Nouvelle prop pour supprimer un article
+  onRemoveItem: (item: Dessert) => void;
 };
 
 export default function ItemBasket({

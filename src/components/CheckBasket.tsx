@@ -26,7 +26,7 @@ export default function CheckBasket({ tab }: any) {
         Confirm Order
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="h-autoo">
+      <AlertDialogContent className="h-auto">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex justify-between items-center">
             <div>

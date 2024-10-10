@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { CircleX, TreeDeciduous } from "lucide-react";
+import { TreeDeciduous } from "lucide-react";
 import CheckBasket from "./CheckBasket";
 import ItemBasket from "./ItemBasket";
 import TotalItem from "./TotalItem";
@@ -10,14 +10,22 @@ import { AlertDialog } from "@radix-ui/react-alert-dialog";
 type Props = {
   tab: { item: Dessert; quantity: number }[];
   isOpen: any;
+  displayElement: string;
 
   onRemoveItem: (item: Dessert) => void;
 };
 
-export default function Basket({ tab, onRemoveItem, isOpen }: Props) {
+export default function Basket({
+  tab,
+  onRemoveItem,
+  isOpen,
+  displayElement,
+}: Props) {
   return (
     <AlertDialog>
-      <div className="lg:flex mx-4 my-10  h-full max-w-full">
+      <div
+        className={`lg:flex ${displayElement}  mx-4 my-10  h-full max-w-full`}
+      >
         <div
           className={`${
             isOpen ? "" : "bg-white p-8 shadow-xl pt-8 my-4 "
@@ -27,7 +35,6 @@ export default function Basket({ tab, onRemoveItem, isOpen }: Props) {
             <p className="text-red-600 font-bold text-2xl text-left">
               Your Cart ({tab.length}){" "}
             </p>
-            <CircleX className="cursor-pointer text-red-600 lg:hidden" />
           </div>
 
           {tab.length === 0 ? (
