@@ -3,7 +3,10 @@ import { desserts } from "../db/data";
 
 export const GET = async () => {
   try {
-    return NextResponse.json(desserts, { status: 200 });
+    const response = NextResponse.json(desserts, { status: 200 });
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    return response;
   } catch (err) {
     console.error(err);
 
