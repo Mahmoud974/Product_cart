@@ -7,8 +7,13 @@ const fetchElements = async (url: string) => {
 };
 
 export const useTemplate = () => {
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000/api/dessert"
+      : "https://product-cart-plum.vercel.app/api/dessert";
+
   return useQuery({
     queryKey: ["get-template"],
-    queryFn: () => fetchElements("http://localhost:3000/api/dessert"),
+    queryFn: () => fetchElements(apiUrl),
   });
 };
