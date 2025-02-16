@@ -13,6 +13,14 @@ export default function Page() {
   const { dessert, tab, modifyCartItem, isScrolled, warning, isOpen } =
     useCounter();
 
+  if (!dessert) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Chargement...</p>
+      </div>
+    );
+  }
+
   return (
     <>
       {warning && (
@@ -106,7 +114,6 @@ export default function Page() {
           </ul>
         </div>
 
-        {/* Affichage du panier */}
         {isOpen && (
           <Basket
             displayElement={"hidden"}
