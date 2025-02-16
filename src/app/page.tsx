@@ -38,7 +38,7 @@ export default function Page() {
           <DialogAlert tab={tab} itemCount={tab.length} />
         </div>
       </header>
-      <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:my-10">
+      <main className="mx-auto container flex lg:flex-row flex-col justify-center gap-4 md:py-10">
         <div className="mx-4 mb-8">
           <div className="lg:flex hidden items-center justify-between w-full lg:relative sticky top-0 md:bg-none bg-[#fefff3] my-2 ">
             <h1 className="text-3xl font-bold my-7">Desserts</h1>

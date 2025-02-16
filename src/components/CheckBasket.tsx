@@ -30,6 +30,7 @@ export default function CheckBasket({ tab }: Props) {
       </AlertDialogTrigger>
 
       <AlertDialogContent className="h-auto">
+        <AlertDialogTitle></AlertDialogTitle>
         <AlertDialogHeader>
           <AlertDialogTitle className="flex justify-between items-center">
             <div>
