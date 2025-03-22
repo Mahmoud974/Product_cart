@@ -32,7 +32,7 @@ export default function ItemBasket({
                 <div>
                   <Image
                     className="object-cover w-12 mr-3 rounded-xl"
-                    src={entry.item.image.mobile}
+                    src={entry.item.image.desktop}
                     alt={entry.item.name}
                     width={1000}
                     height={1000}

@@ -41,7 +41,7 @@ export default function Basket({
             <div className="mx-auto">
               <Image
                 className="object-cover lg:w-44 w-60 py-8 lg:mx-12 mx-0 rounded-2xl flex items-center justify-center"
-                src="/assets/images/cake.png"
+                src="https://dpcsh77th2fy8.cloudfront.net/cake.png"
                 alt="basket empty"
                 width={1000}
                 height={1000}
