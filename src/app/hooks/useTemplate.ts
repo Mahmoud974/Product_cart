@@ -20,5 +20,3 @@ export const useTemplate = () => {
     queryFn: () => fetchElements(apiUrl),
   });
 };
-
-//https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource
