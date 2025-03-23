@@ -2,18 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchElements = async (url: string) => {
-  const response = await axios.get(url);
+  const response = await axios.get(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 };
 
 export const useTemplate = () => {
-  const apiUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000/api/dessert"
-      : "https://product-cart-plum.vercel.app/api/dessert";
+  const apiUrl: any =
+    process.env.NODE_ENV === "development" &&
+    "https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource";
 
   return useQuery({
     queryKey: ["get-template"],
     queryFn: () => fetchElements(apiUrl),
   });
 };
+
+//https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource
