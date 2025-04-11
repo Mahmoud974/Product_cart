@@ -14,7 +14,7 @@ export const useTemplate = () => {
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? "https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource"
-      : "https://ton-api-en-prod.com/resource";
+      : "https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource";
 
   return useQuery({
     queryKey: ["get-template"],
