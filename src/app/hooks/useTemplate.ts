@@ -11,12 +11,14 @@ const fetchElements = async (url: string) => {
 };
 
 export const useTemplate = () => {
-  const apiUrl: any =
-    process.env.NODE_ENV === "development" &&
-    "https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource";
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "https://zl3olqriv5.execute-api.eu-west-3.amazonaws.com/dev/resource"
+      : "https://ton-api-en-prod.com/resource";
 
   return useQuery({
     queryKey: ["get-template"],
     queryFn: () => fetchElements(apiUrl),
+    enabled: !!apiUrl,
   });
 };
