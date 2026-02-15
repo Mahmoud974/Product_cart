@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/images/dessert-app.png" width="800" alt="Dessert Shop Hero image" />
+
 
 # 🍰 DESSERT SHOP  
 ### **Sweet. Simple. Scalable.**
@@ -15,10 +15,7 @@ Application e-commerce front-end moderne permettant d’afficher des produits et
 </div>
 
 ---
-
-## 🏗️ Architecture
-
-<img src="public/images/schema-aws-dessert.png" width="800" alt="Architecture AWS Dessert App" />
+<img src="public/images/dessert-app.png" width="800" alt="Dessert Shop Hero image" />
 
 ---
 
